@@ -6,6 +6,7 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 /**
 	 * 
@@ -27,6 +28,7 @@ public abstract class Answer {
 	protected int id;
 
 	//The answers are related to a question
+	@ManyToOne(optional = false)
 	protected Question question;
 	
 	@ManyToOne

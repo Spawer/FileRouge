@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.Transient;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -16,7 +18,7 @@ public class Candidate {
 	private String firstName;
 	private String lastName;
 	private String email;
-	
+	@Transient
 	private Map<Questionnaire,List<Answer>> questionnairesAnswered = new HashMap<>();
 	
 	public Candidate() {

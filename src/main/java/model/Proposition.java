@@ -1,6 +1,7 @@
 package model;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.JoinColumn;
@@ -18,7 +19,7 @@ import javax.persistence.ManyToOne;
 @Entity
 @Inheritance
 public class Proposition {
-	@Id
+	@Id @GeneratedValue
 	protected int id;
 
 	@ManyToOne

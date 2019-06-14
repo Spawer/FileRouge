@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -22,12 +23,20 @@ public class Questionnaire {
 	private String name;
 	private boolean isValide;
 
-	@OneToMany
+	@OneToMany(mappedBy="questionnaire", cascade = CascadeType.PERSIST)
 	private List<Question> questions = new ArrayList<Question>();
 
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "conceptor_id")
 	private Conceptor conceptor;
+
+	public Conceptor getConceptor() {
+		return this.conceptor;
+	}
+
+	public void setConceptor(Conceptor conceptor) {
+		this.conceptor = conceptor;
+	}
 	
 	public Questionnaire(String name) {
 		this.name=name;

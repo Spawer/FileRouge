@@ -1,6 +1,10 @@
 package model;
 
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+
+import org.jboss.resteasy.spi.touri.MappedBy;
 
 /**
  * 
@@ -16,6 +20,8 @@ import javax.persistence.Entity;
 public class AnswerMCQ extends Answer {
 	// this attribute represents the proposition provided by the conceptor
 	// to help the corrector
+	@OneToOne(optional = false)
+	@JoinColumn(name="proposition_id")
 	private PropositionMCQ propositionSelected; // mettre une classe fille ex: PropositionMCQ
 
 	public AnswerMCQ(){}

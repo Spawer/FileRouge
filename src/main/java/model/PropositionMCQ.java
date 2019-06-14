@@ -2,6 +2,7 @@ package model;
 
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
+import javax.persistence.OneToOne;
 
 /**
  * 
@@ -18,6 +19,9 @@ public class PropositionMCQ extends Proposition {
 	// this attribute is set by the Conceptor and indicates if the proposition is
 	// right
 	private boolean isRight;
+
+	@OneToOne(mappedBy = "propositionSelected")
+	private AnswerMCQ answer;
 
 	/**
 	 * Instantiates a proposition for a multiple choice question

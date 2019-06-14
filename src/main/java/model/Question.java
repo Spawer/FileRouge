@@ -3,38 +3,47 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 @Entity
 public class Question {
-	public static enum QuestionType {MCQ,OPEN,PROGRAMMING}
+	@Id @GeneratedValue
+	private int id;
+
+	public static enum QuestionType {
+		MCQ, OPEN, PROGRAMMING
+	}
+
 	String statement;
 	@Enumerated
 	private QuestionType type;
 	private int timer;
-	
-	@OneToMany
+
+	@OneToMany(mappedBy = "question", cascade = CascadeType.PERSIST)
 	private List<Proposition> propositions = new ArrayList<Proposition>();
 
 	@ManyToOne
-	@JoinColumn(name="questionnaire_id")
+	@JoinColumn(name = "questionnaire_id")
 	private Questionnaire questionnaire;
-	
+
 	public Question() {
 	}
-	
+
 	public Question(String statement, int timer, QuestionType type) {
-		this.statement=statement;
-		this.type=type;
-		this.timer=timer;
+		this.statement = statement;
+		this.type = type;
+		this.timer = timer;
 	}
-	
+
 	public void show() {
-		
+
 	}
 
 	public int getTimer() {
@@ -44,25 +53,27 @@ public class Question {
 	public void setTimer(int timer) {
 		this.timer = timer;
 	}
-	
-	public Proposition  getProposition(int index) {
+
+	public Proposition getProposition(int index) {
 		return propositions.get(index);
 	}
 
-	public void addProposition(Proposition  proposition) {
+	public void addProposition(Proposition proposition) {
 		propositions.add(proposition);
 	}
-	
+
 	public void removePropositionByIndex(int index) {
 		propositions.remove(index);
 	}
-	
+
 	public void removePropositionByQuestion(Proposition proposition) {
 		propositions.remove(proposition);
 	}
+
 	public QuestionType getType() {
 		return type;
 	}
+
 	public void setType(QuestionType type) {
 		this.type = type;
 	}
@@ -72,9 +83,9 @@ public class Question {
 		propositions.add(p);
 		return p;
 	}
-	
+
 	public PropositionMCQ createProposition(String statement, boolean isRight) {
-		PropositionMCQ p = new PropositionMCQ(statement,isRight);
+		PropositionMCQ p = new PropositionMCQ(statement, isRight);
 		propositions.add(p);
 		return p;
 	}
