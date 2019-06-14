@@ -1,5 +1,12 @@
 package model;
-	/**
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+/**
 	 * 
 	 * 
 	 * This class represents the super class Proposition
@@ -8,7 +15,31 @@ package model;
 	 * @author Team Pastis
 	 * @see Conceptor
 	 */
+@Entity
+@Inheritance
 public class Proposition {
+	@Id
+	protected int id;
+
+	@ManyToOne
+	@JoinColumn(name = "question_id")
+	protected Question question;
+
+	public int getId() {
+		return this.id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getStatement() {
+		return statement;
+	}
+	public void setStatement(String statement) {
+		this.statement = statement;
+	}
+
 	// contains the value of proposition provided by the Conceptor
 	private String statement;
 	/**
@@ -19,10 +50,4 @@ public class Proposition {
 		this.statement=statement;
 	}
 	
-	public String getStatement() {
-		return statement;
-	}
-	public void setStatement(String statement) {
-		this.statement = statement;
-	}
 }

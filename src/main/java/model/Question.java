@@ -3,12 +3,26 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.Enumerated;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+
+@Entity
 public class Question {
 	public static enum QuestionType {MCQ,OPEN,PROGRAMMING}
 	String statement;
+	@Enumerated
 	private QuestionType type;
 	private int timer;
+	
+	@OneToMany
 	private List<Proposition> propositions = new ArrayList<Proposition>();
+
+	@ManyToOne
+	@JoinColumn(name="questionnaire_id")
+	private Questionnaire questionnaire;
 	
 	public Question() {
 	}

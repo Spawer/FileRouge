@@ -1,5 +1,13 @@
 package model;
-	/**
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+/**
 	 * 
 	 * 
 	 * This abstract class represents the super class answers
@@ -11,14 +19,27 @@ package model;
 	 * @see AnswerOpen
 	 * 
 	 */
+@Entity 
+@Inheritance
 public abstract class Answer {
+
+	@Id @GeneratedValue
+	protected int id;
+
 	//The answers are related to a question
-	private Question question;
-	// à vérifier dans le déroulement de l'application si c'est pertinent de le laisser
-	// private Candidate candidate;
-	// The answers are related to a question
-	private Questionnaire questionnaire;
+	protected Question question;
 	
+	@ManyToOne
+	@JoinColumn(name = "candidate_id")
+	protected Candidate candidate;
+	
+	// The answers are related to a question
+	@ManyToOne
+	@JoinColumn(name = "questionnaire_id")
+	protected Questionnaire questionnaire;
+	
+
+	public Answer() {}
 	/**
 	 * Instantiates an answer
 	 * @param questionnaire
@@ -42,12 +63,12 @@ public abstract class Answer {
 	public void setQuestion(Question question) {
 		this.question=question;
 	}
-//	public Candidate getCandidate() {
-//		return candidate;
-//	}
-//	public void setCandidate(Candidate candidate) {
-//		this.candidate = candidate;
-//	}
+	public Candidate getCandidate() {
+		return candidate;
+	}
+	public void setCandidate(Candidate candidate) {
+		this.candidate = candidate;
+	}
 	
 	/**
 	 *@return this method return the answer in String form 

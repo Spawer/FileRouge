@@ -5,11 +5,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+@Entity
 public class Candidate {
+	@Id @GeneratedValue
+	private int id;
 	private String firstName;
 	private String lastName;
 	private String email;
-	private Map<Questionnaire,List<Answer>> questionnairesAnswered = new HashMap();
+	
+	private Map<Questionnaire,List<Answer>> questionnairesAnswered = new HashMap<>();
 	
 	public Candidate() {
 	}
@@ -63,7 +71,7 @@ public class Candidate {
 	}
 	
 	public void addAnswer(Answer answer, Questionnaire questionnaire) {
-		if(questionnairesAnswered.containsValue(questionnaire)) {
+		if(questionnairesAnswered.containsKey(questionnaire)) {
 			List<Answer> answers = questionnairesAnswered.get(questionnaire);
 			answers.add(answer);
 			questionnairesAnswered.remove(questionnaire);

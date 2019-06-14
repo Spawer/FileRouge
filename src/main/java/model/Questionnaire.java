@@ -5,12 +5,29 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+
 import model.Question.QuestionType;
 
+@Entity
 public class Questionnaire {
+	@Id @GeneratedValue
+	private int id;
+
 	private String name;
 	private boolean isValide;
+
+	@OneToMany
 	private List<Question> questions = new ArrayList<Question>();
+
+	@ManyToOne(optional = false)
+	@JoinColumn(name = "conceptor_id")
+	private Conceptor conceptor;
 	
 	public Questionnaire(String name) {
 		this.name=name;

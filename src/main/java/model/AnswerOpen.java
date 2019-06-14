@@ -1,4 +1,7 @@
 package model;
+
+import javax.persistence.Entity;
+
 /**
  * 
  * 
@@ -7,9 +10,13 @@ package model;
  * @author Team Pastis
  * @see Answer
  */
+@Entity
 public class AnswerOpen extends Answer{
 	// this atritbute contains the answer
 	String answer;
+
+	public AnswerOpen() {}
+
 	/**
 	 * Instantiates an open answer
 	 * @param questionnaire
