@@ -1,6 +1,5 @@
 # Eclipse
 .project
-.classpath
 .settings/
 bin/
 
@@ -48,5 +47,3 @@ local.properties
 .loadpath
 .recommenders
 
-
-src/main/resources/application.properties
