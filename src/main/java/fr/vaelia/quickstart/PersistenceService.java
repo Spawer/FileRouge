@@ -5,11 +5,11 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
-import model.Conceptor;
-import model.PropositionMCQ;
-import model.Question;
-import model.Questionnaire;
-import model.Question.QuestionType;
+import fr.vaelia.model.Conceptor;
+import fr.vaelia.model.PropositionMCQ;
+import fr.vaelia.model.Question;
+import fr.vaelia.model.Question.QuestionType;
+import fr.vaelia.model.Questionnaire;
 
 /**
  * PersistenceService
