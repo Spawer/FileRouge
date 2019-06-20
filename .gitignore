@@ -46,3 +46,6 @@ local.properties
 .settings/
 .loadpath
 .recommenders
+
+# Quarkus
+application.properties
