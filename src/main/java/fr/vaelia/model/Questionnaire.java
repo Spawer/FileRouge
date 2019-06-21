@@ -7,8 +7,6 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -21,6 +19,7 @@ public class Questionnaire extends PanacheEntity{
 
 	private String name;
 	private boolean isValide;
+
 
 	@OneToMany(mappedBy="questionnaire", cascade = CascadeType.PERSIST)
 	private List<Question> questions = new ArrayList<Question>();
@@ -103,6 +102,12 @@ public class Questionnaire extends PanacheEntity{
 	}
 	
 	public Questionnaire() {}
-	
+	public List<Question> getQuestions() {
+		return questions;
+	}
+
+	public void setQuestions(List<Question> questions) {
+		this.questions = questions;
+	}
 	
 }

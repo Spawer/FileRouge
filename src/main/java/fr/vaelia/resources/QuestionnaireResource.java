@@ -1,5 +1,7 @@
 package fr.vaelia.resources;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -13,6 +15,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import fr.vaelia.model.Conceptor;
+import fr.vaelia.model.Question;
 import fr.vaelia.model.Questionnaire;
 
 /**
@@ -69,5 +72,44 @@ public class QuestionnaireResource {
 		q.delete();
 		return Response.ok(q).status(200).build();
 	}
-
+	
+	@PUT	
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("/{id}/question")
+	@Transactional
+	public Response updateQuestionnaireByAddindQuestion(@PathParam("id") Long id, Question question) {
+		Questionnaire q = Questionnaire.findById(id);
+		List <Question> questions = q.getQuestions();
+		questions.add(question);
+		q.setQuestions(questions);
+		return Response.ok(q).status(200).build();
+	}
+	
+	@DELETE
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("/{id}/question/{questionId}")
+	@Transactional
+	public Response deleteQuestionnaireQuestionById(@PathParam("id") Long id, @PathParam("questionId") Long questionId) {
+		Question quest = Question.findById(questionId);
+		quest.delete();
+		return Response.ok().status(Response.Status.NO_CONTENT).build();
+	}
+	
+	@PUT
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("/{id}/question/{questionId}")
+	@Transactional
+	public Response updateQuestionnaireQuestionById(@PathParam("id") Long id, @PathParam("questionId") Long questionId, Question question) {
+		Questionnaire q = Questionnaire.findById(id);
+		Question quest = Question.findById(questionId);
+		List <Question> questions = q.getQuestions();
+		int index = questions.indexOf(quest);
+		System.out.println(index);
+		questions.set(index, question);
+		q.setQuestions(questions);
+		return Response.ok().status(200).build();
+	}
 }

@@ -6,22 +6,20 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import io.quarkus.hibernate.orm.panache.PanacheEntity;
+
 @Entity
-public class Question {
-	@Id @GeneratedValue
-	private int id;
+public class Question extends PanacheEntity {
 
 	public static enum QuestionType {
 		MCQ, OPEN, PROGRAMMING
 	}
 
-	String statement;
+	private String statement;
 	@Enumerated
 	private QuestionType type;
 	private int timer;
@@ -37,7 +35,7 @@ public class Question {
 	}
 
 	public Question(String statement, int timer, QuestionType type) {
-		this.statement = statement;
+		this.setStatement(statement);
 		this.type = type;
 		this.timer = timer;
 	}
@@ -88,5 +86,13 @@ public class Question {
 		PropositionMCQ p = new PropositionMCQ(statement, isRight);
 		propositions.add(p);
 		return p;
+	}
+
+	public String getStatement() {
+		return statement;
+	}
+
+	public void setStatement(String statement) {
+		this.statement = statement;
 	}
 }
