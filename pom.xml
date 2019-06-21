@@ -29,13 +29,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>io.quarkus</groupId>
-			<artifactId>quarkus-jdbc-postgresql</artifactId>
-			<version>0.16.1</version>
-		</dependency>
-		<dependency>
-			<groupId>io.quarkus</groupId>
 			<artifactId>quarkus-hibernate-orm</artifactId>
-			<version>0.16.1</version>
 		</dependency>
 		<dependency>
 			<groupId>io.quarkus</groupId>
@@ -64,10 +58,6 @@
 		<dependency>
 			<groupId>io.quarkus</groupId>
 			<artifactId>quarkus-hibernate-orm-panache</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>io.quarkus</groupId>
-			<artifactId>quarkus-resteasy-jsonb</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>io.quarkus</groupId>
