@@ -1,6 +1,7 @@
 package fr.vaelia.resources;
 
 import javax.ws.rs.Produces;
+import javax.json.Json;
 import javax.transaction.Transactional;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -11,6 +12,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.ext.ExceptionMapper;
+import javax.ws.rs.ext.Provider;
 import javax.ws.rs.WebApplicationException;
 
 import fr.vaelia.model.Corrector;
@@ -76,4 +79,20 @@ public class CorrectorResource {
 		corrector.delete();
         return Response.ok(corrector).status(200).build();
 	}
+	
+	@Provider
+    public static class ErrorMapper implements ExceptionMapper<Exception> {
+ 
+        @Override
+        public Response toResponse(Exception exception) {
+            int code = 500;
+            if (exception instanceof WebApplicationException) {
+                code = ((WebApplicationException) exception).getResponse().getStatus();
+            }
+            return Response.status(code)
+                    .entity(Json.createObjectBuilder().add("error", exception.getMessage()).add("code", code).build())
+                    .build();
+        }
+ 
+    }
 }
