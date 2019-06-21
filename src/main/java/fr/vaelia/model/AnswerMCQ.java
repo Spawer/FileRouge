@@ -20,7 +20,7 @@ import org.jboss.resteasy.spi.touri.MappedBy;
 public class AnswerMCQ extends Answer {
 	// this attribute represents the proposition provided by the conceptor
 	// to help the corrector
-	@OneToOne(optional = false)
+	@OneToOne//(optional = false)
 	@JoinColumn(name="proposition_id")
 	private PropositionMCQ propositionSelected; // mettre une classe fille ex: PropositionMCQ
 
