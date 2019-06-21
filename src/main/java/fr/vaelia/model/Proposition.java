@@ -7,6 +7,8 @@ import javax.persistence.Inheritance;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import io.quarkus.hibernate.orm.panache.PanacheEntity;
+
 /**
 	 * 
 	 * 
@@ -18,21 +20,11 @@ import javax.persistence.ManyToOne;
 	 */
 @Entity
 @Inheritance
-public class Proposition {
-	@Id @GeneratedValue
-	protected int id;
+public class Proposition extends PanacheEntity{
 
 	@ManyToOne
 	@JoinColumn(name = "question_id")
 	protected Question question;
-
-	public int getId() {
-		return this.id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
 
 	public String getStatement() {
 		return statement;
@@ -47,6 +39,7 @@ public class Proposition {
 	 * Instantiates a proposition
 	 * @param statement (the statement of the proposition)
 	 */
+	public Proposition() {}
 	public Proposition(String statement) {
 		this.statement=statement;
 	}
