@@ -13,24 +13,21 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import fr.vaelia.model.Conceptor;
-import fr.vaelia.model.Questionnaire;
 
 /**
  * QuestionnaireResource
  */
-@Path("/questionnaire")
-public class QuestionnaireResource {
+@Path("/conceptor")
+public class ConceptorResource {
 
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Transactional
-	@Path("/conceptor/{id}")
-	public Response createQuestionnaire(Questionnaire questionnaire,@PathParam("id") Long id) {
-		questionnaire.setConceptor(Conceptor.findById(id));
-		questionnaire.persist();
+	public Response createConceptor(Conceptor conceptor) {
+		conceptor.persist();
 		return Response
-				.ok(questionnaire)
+				.ok(conceptor)
 				.status(Response.Status.CREATED)
 				.build();
 	}
@@ -38,11 +35,11 @@ public class QuestionnaireResource {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/{id}")
-	public Response getQuestionnaireById(@PathParam("id") Long id) {
-		Questionnaire q = Questionnaire.findById(id);
-		System.out.println(q.getName());
+	public Response getConceptorById(@PathParam("id") Long id) {
+		Conceptor c = Conceptor.findById(id);
+		System.out.println(c.getFirstName());
 		return Response
-				.ok(q)
+				.ok(c)
 				.status(200)
 				.build();
 	}
@@ -52,11 +49,11 @@ public class QuestionnaireResource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("/{id}")
 	@Transactional
-	public Response updateQuestionnaireById(@PathParam("id") Long id, Questionnaire questionnaire) {
-		Questionnaire q = Questionnaire.findById(id);
-		q.setName(questionnaire.getName());
-		q.setValide(questionnaire.isValide());
-		return Response.ok(q).status(200).build();
+	public Response updateById(@PathParam("id") Long id, Conceptor conceptor) {
+		Conceptor c = Conceptor.findById(id);
+		c.setFirstName(conceptor.getFirstName());
+		c.setLastName(conceptor.getLastName());
+		return Response.ok(c).status(200).build();
 	}
 	
 	@DELETE
@@ -64,10 +61,10 @@ public class QuestionnaireResource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("/{id}")
 	@Transactional
-	public Response deleteQuestionnaireById(@PathParam("id") Long id, Questionnaire questionnaire) {
-		Questionnaire q = Questionnaire.findById(id);
-		q.delete();
-		return Response.ok(q).status(200).build();
+	public Response deleteById(@PathParam("id") Long id, Conceptor conceptor) {
+		Conceptor c = Conceptor.findById(id);
+		c.delete();
+		return Response.ok(c).status(200).build();
 	}
 
 }

@@ -29,6 +29,9 @@ public class PropositionMCQ extends Proposition {
 	 * @param statement (the statement of the proposition)
 	 * @param isRight   (Set the fact of being right)
 	 */
+	public PropositionMCQ() {
+		super();
+	}
 	public PropositionMCQ(String statement, boolean isRight) {
 		super(statement);
 		this.isRight = isRight;
@@ -38,7 +41,7 @@ public class PropositionMCQ extends Proposition {
 		return isRight;
 	}
 
-	public void setRight(boolean isRight) {
+	public void setIsRight(boolean isRight) {
 		this.isRight = isRight;
 	}
 }

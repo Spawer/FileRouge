@@ -7,14 +7,15 @@ import java.util.Map;
 
 import javax.persistence.Transient;
 
+import io.quarkus.hibernate.orm.panache.PanacheEntity;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
-public class Candidate {
-	@Id @GeneratedValue
-	private int id;
+public class Candidate extends PanacheEntity {
+	
 	private String firstName;
 	private String lastName;
 	private String email;
@@ -24,7 +25,7 @@ public class Candidate {
 	public Candidate() {
 	}
 	public Candidate(String firstName) {
-		this.firstName=firstName;
+		this.firstName=firstName ;
 	}
 	
 	public String getFirstName() {

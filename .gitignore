@@ -49,4 +49,8 @@ local.properties
 .recommenders
 
 # Quarkus
+<<<<<<< HEAD
 src/main/resources/application.properties
+=======
+src/main/resources/application.properties
+>>>>>>> baa2994d66e0c6beb4730cd950f6e2f608a01a3b

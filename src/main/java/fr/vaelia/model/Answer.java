@@ -1,12 +1,12 @@
 package fr.vaelia.model;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+
 import javax.persistence.Inheritance;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+
+import io.quarkus.hibernate.orm.panache.PanacheEntity;
 
 /**
 	 * 
@@ -22,13 +22,12 @@ import javax.persistence.OneToOne;
 	 */
 @Entity 
 @Inheritance
-public abstract class Answer {
+public abstract class Answer extends PanacheEntity {
 
-	@Id @GeneratedValue
-	protected int id;
+	
 
 	//The answers are related to a question
-	@ManyToOne(optional = false)
+	@ManyToOne//(optional = false)
 	protected Question question;
 	
 	@ManyToOne
