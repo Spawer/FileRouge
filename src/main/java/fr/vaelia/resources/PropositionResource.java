@@ -13,24 +13,24 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import fr.vaelia.model.Conceptor;
-import fr.vaelia.model.Questionnaire;
+import fr.vaelia.model.Proposition;
+import fr.vaelia.model.PropositionMCQ;
 
 /**
  * QuestionnaireResource
  */
-@Path("/questionnaire")
-public class QuestionnaireResource {
+@Path("/proposition")
+public class PropositionResource {
 
+	
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Transactional
-	@Path("/conceptor/{id}")
-	public Response createQuestionnaire(Questionnaire questionnaire,@PathParam("id") Long id) {
-		questionnaire.setConceptor(Conceptor.findById(id));
-		questionnaire.persist();
+	public Response createProposition(Proposition proposition) {
+		proposition.persist();
 		return Response
-				.ok(questionnaire)
+				.ok(proposition)
 				.status(Response.Status.CREATED)
 				.build();
 	}
@@ -38,11 +38,10 @@ public class QuestionnaireResource {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/{id}")
-	public Response getQuestionnaireById(@PathParam("id") Long id) {
-		Questionnaire q = Questionnaire.findById(id);
-		System.out.println(q.getName());
+	public Response getPropositionById(@PathParam("id") Long id) {
+		Proposition p = Proposition.findById(id);
 		return Response
-				.ok(q)
+				.ok(p)
 				.status(200)
 				.build();
 	}
@@ -52,11 +51,10 @@ public class QuestionnaireResource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("/{id}")
 	@Transactional
-	public Response updateQuestionnaireById(@PathParam("id") Long id, Questionnaire questionnaire) {
-		Questionnaire q = Questionnaire.findById(id);
-		q.setName(questionnaire.getName());
-		q.setValide(questionnaire.isValide());
-		return Response.ok(q).status(200).build();
+	public Response updatePropositionById(@PathParam("id") Long id, Proposition proposition) {
+		Proposition p = Proposition.findById(id);
+		p.setStatement(proposition.getStatement());
+		return Response.ok(p).status(200).build();
 	}
 	
 	@DELETE
@@ -64,10 +62,10 @@ public class QuestionnaireResource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("/{id}")
 	@Transactional
-	public Response deleteQuestionnaireById(@PathParam("id") Long id, Questionnaire questionnaire) {
-		Questionnaire q = Questionnaire.findById(id);
-		q.delete();
-		return Response.ok(q).status(200).build();
+	public Response deletePropositionById(@PathParam("id") Long id, Proposition proposition) {
+		Proposition p =	Proposition.findById(id);
+		p.delete();
+		return Response.ok(p).status(200).build();
 	}
 
 }
