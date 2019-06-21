@@ -25,7 +25,7 @@ public class Candidate extends PanacheEntity {
 	public Candidate() {
 	}
 	public Candidate(String firstName) {
-		this.firstName=firstName;
+		this.firstName=firstName ;
 	}
 	
 	public String getFirstName() {
