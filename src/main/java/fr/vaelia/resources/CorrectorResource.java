@@ -17,6 +17,8 @@ import javax.ws.rs.ext.Provider;
 import javax.ws.rs.WebApplicationException;
 
 import fr.vaelia.model.Corrector;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 
 @Path("/corrector")
 public class CorrectorResource {
@@ -29,7 +31,8 @@ public class CorrectorResource {
 	@GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/{id}")
-    public Response getSingle(@PathParam("id") Long id) {
+	@Operation(summary="Get corrector", description="Get corrector by its ID")
+	public Response getSingle(@Parameter(description="The ID of the corrector", required=true)@PathParam("id") Long id) {
 		Corrector corrector = Corrector.findById(id);
 		if (corrector == null) {
 			throw new WebApplicationException("Corrector with id of "+id+" does not exist.", 404);
