@@ -7,19 +7,16 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import fr.vaelia.model.Question.QuestionType;
+import io.quarkus.hibernate.orm.panache.PanacheEntity;
 
 @Entity
-public class Questionnaire {
-	@Id @GeneratedValue
-	private int id;
-
+public class Questionnaire extends PanacheEntity{
+	
 	private String name;
 	private boolean isValide;
 
@@ -101,6 +98,14 @@ public class Questionnaire {
 		}
 		// temporar bullshit
 		return "";
+	}
+
+	public List<Question> getQuestions() {
+		return questions;
+	}
+
+	public void setQuestions(List<Question> questions) {
+		this.questions = questions;
 	}
 	
 	
