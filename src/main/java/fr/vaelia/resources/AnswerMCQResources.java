@@ -3,6 +3,7 @@ package fr.vaelia.resources;
 import javax.transaction.Transactional;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -56,6 +57,17 @@ public class AnswerMCQResources {
 		}
 		return Response.notModified("AnswerMCQ not find").status(404).build();
 
+	}
+	@DELETE
+	@Transactional
+	@Path("{id}")
+	public Response deleteAnswerMCQ(@PathParam("id") Long id) {
+		if (AnswerMCQ.findById(id)!= null) {
+			AnswerMCQ.findById(id).delete();
+			return Response.ok("AnswerMCQ deleted").status(200).build();	
+		}
+		return Response.notModified("AnswerMCQ not existed").status(404).build();
+		
 	}
 
 }
