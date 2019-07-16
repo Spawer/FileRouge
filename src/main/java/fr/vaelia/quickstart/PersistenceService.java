@@ -22,17 +22,17 @@ public class PersistenceService {
 
     public Questionnaire createEntities() {
         
-        Questionnaire quest = new Questionnaire("Mon questionnaire");
-        quest.setConceptor(new Conceptor("Concepteur"));
-        for (int i = 1; i < 10; i++) {
-            Question q=new Question(String.format("Statement n° %d", i), i, QuestionType.MCQ);
-            for (int j = 1; j < 5; j++) {
-                PropositionMCQ p = new PropositionMCQ(String.format("Statement n° %d%d", i,j), i%j == 0);
-                q.addProposition(p);
-            }
-            quest.addQuestion(q);
-        }
-        return quest;
+        // Questionnaire quest = new Questionnaire("Mon questionnaire");
+        // quest.setConceptor(new Conceptor("Concepteur"));
+        // for (int i = 1; i < 10; i++) {
+        //     Question q=new Question(String.format("Statement n° %d", i), i, QuestionType.MCQ);
+        //     for (int j = 1; j < 5; j++) {
+        //         PropositionMCQ p = new PropositionMCQ(String.format("Statement n° %d%d", i,j), i%j == 0);
+        //         q.addProposition(p);
+        //     }
+        //     quest.addQuestion(q);
+        // }
+        return null;
     }
 
     @Transactional
