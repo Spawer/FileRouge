@@ -20,6 +20,14 @@ public class Question extends PanacheEntity {
 	}
 
 	String statement;
+
+	public String getStatement() {
+		return this.statement;
+	}
+
+	public void setStatement(String statement) {
+		this.statement = statement;
+	}
 	@Enumerated
 	private QuestionType type;
 	private int timer;
@@ -82,5 +90,13 @@ public class Question extends PanacheEntity {
 		PropositionMCQ p = new PropositionMCQ(statement, isRight);
 		propositions.add(p);
 		return p;
+	}
+	
+	public List<Proposition> getPropositions() {
+		return this.propositions;
+	}
+
+	public void setPropositions(List<Proposition> propositions) {
+		this.propositions = propositions;
 	}
 }

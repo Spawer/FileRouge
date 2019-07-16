@@ -39,7 +39,6 @@ public class Proposition extends PanacheEntity {
 	 * 
 	 * @param statement (the statement of the proposition)
 	 */
-	public Proposition() {}
 	public Proposition(String statement) {
 		this.statement = statement;
 	}

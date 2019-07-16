@@ -12,9 +12,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import fr.vaelia.model.Conceptor;
 import fr.vaelia.model.Proposition;
-import fr.vaelia.model.PropositionMCQ;
 
 /**
  * QuestionnaireResource
