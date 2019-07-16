@@ -36,6 +36,10 @@ public class AnswerMCQ extends Answer {
 		super(questionnaire, question);
 		this.propositionSelected = proposition;
 	}
+	public AnswerMCQ(PropositionMCQ proposition) {
+		this.propositionSelected = proposition;
+		
+	}
 
 	public String getAnswer() {
 		return propositionSelected.getStatement();
@@ -44,5 +48,7 @@ public class AnswerMCQ extends Answer {
 	public void setAnswer(PropositionMCQ answer) {
 		this.propositionSelected = answer;
 	}
+	
+	
 
 }
