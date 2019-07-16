@@ -15,7 +15,7 @@ import javax.ws.rs.core.Response;
 import fr.vaelia.model.AnswerOpen;
 
 
-@Path("/answerOpen")
+@Path("/answerOpens")
 public class AnswerOpenResources {
 	@POST
 	@Transactional

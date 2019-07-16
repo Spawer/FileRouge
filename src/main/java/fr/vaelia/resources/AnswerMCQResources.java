@@ -1,8 +1,6 @@
 package fr.vaelia.resources;
 
 import javax.transaction.Transactional;
-
-import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -14,10 +12,9 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import fr.vaelia.model.AnswerMCQ;
-import fr.vaelia.model.AnswerOpen;
 import fr.vaelia.model.PropositionMCQ;
 
-@Path("/answerMCQ")
+@Path("/answerMCQs")
 public class AnswerMCQResources {
 
 	@POST

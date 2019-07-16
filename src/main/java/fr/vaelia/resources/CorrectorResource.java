@@ -20,7 +20,7 @@ import fr.vaelia.model.Corrector;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 
-@Path("/corrector")
+@Path("/correctors")
 public class CorrectorResource {
 
 	@GET

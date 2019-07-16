@@ -17,7 +17,7 @@ import fr.vaelia.model.Proposition;
 /**
  * QuestionnaireResource
  */
-@Path("/proposition")
+@Path("/propositions")
 public class PropositionResource {
 
 	

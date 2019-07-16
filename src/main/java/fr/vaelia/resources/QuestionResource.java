@@ -21,7 +21,7 @@ import fr.vaelia.model.Question.QuestionType;
 /**
  * QuestionResource
  */
-@Path("/question")
+@Path("/questions")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class QuestionResource {

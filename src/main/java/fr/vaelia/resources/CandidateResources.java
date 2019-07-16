@@ -15,7 +15,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.transaction.Transactional;
 
-@Path("/candidate")
+@Path("/candidates")
 public class CandidateResources {
 	@POST
 	@Transactional

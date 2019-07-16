@@ -16,7 +16,7 @@ import fr.vaelia.model.PropositionMCQ;
 /**
  * QuestionnaireResource
  */
-@Path("/propositionMCQ")
+@Path("/propositionMCQs")
 public class PropositionMCQResource {
 
 	

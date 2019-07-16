@@ -17,7 +17,7 @@ import fr.vaelia.model.Conceptor;
 /**
  * QuestionnaireResource
  */
-@Path("/conceptor")
+@Path("/conceptors")
 public class ConceptorResource {
 
 	@POST

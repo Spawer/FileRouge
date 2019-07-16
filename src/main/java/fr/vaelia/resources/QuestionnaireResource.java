@@ -18,7 +18,7 @@ import fr.vaelia.model.Questionnaire;
 /**
  * QuestionnaireResource
  */
-@Path("/questionnaire")
+@Path("/questionnaires")
 public class QuestionnaireResource {
 
 	@POST
