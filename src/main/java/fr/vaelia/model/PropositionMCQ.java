@@ -2,6 +2,8 @@ package fr.vaelia.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 /**
@@ -23,6 +25,10 @@ public class PropositionMCQ extends Proposition {
 	@OneToOne(mappedBy = "propositionSelected")
 	private AnswerMCQ answer;
 
+	@ManyToOne
+	@JoinColumn(name = "questionmcq_id")
+	protected Question questionMCQ;
+	
 	/**
 	 * Instantiates a proposition for a multiple choice question
 	 * 

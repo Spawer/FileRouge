@@ -19,9 +19,10 @@ import io.quarkus.hibernate.orm.panache.PanacheEntity;
 @Entity
 @Inheritance
 public class Proposition extends PanacheEntity {
+
 	@ManyToOne
 	@JoinColumn(name = "question_id")
-	protected Question question;
+	private Question question;
 
 	public String getStatement() {
 		return statement;

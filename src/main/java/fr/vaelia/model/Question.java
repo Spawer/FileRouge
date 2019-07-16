@@ -5,10 +5,12 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
 
@@ -28,12 +30,15 @@ public class Question extends PanacheEntity {
 	public void setStatement(String statement) {
 		this.statement = statement;
 	}
-	@Enumerated
+	@Enumerated(EnumType.STRING)
 	private QuestionType type;
 	private int timer;
 
-	@OneToMany(mappedBy = "question", cascade = CascadeType.PERSIST)
-	private List<Proposition> propositions = new ArrayList<Proposition>();
+	@OneToMany(mappedBy = "questionMCQ", cascade = CascadeType.PERSIST)
+	private List<PropositionMCQ> propositionsMCQ = new ArrayList<PropositionMCQ>();
+
+	@OneToOne(mappedBy = "question",cascade = CascadeType.PERSIST)
+	private Proposition proposition;
 
 	@ManyToOne
 	@JoinColumn(name = "questionnaire_id")
@@ -56,20 +61,12 @@ public class Question extends PanacheEntity {
 		this.timer = timer;
 	}
 
-	public Proposition getProposition(int index) {
-		return propositions.get(index);
+	public Proposition getProposition() {
+		return proposition;
 	}
 
-	public void addProposition(Proposition proposition) {
-		propositions.add(proposition);
-	}
-
-	public void removePropositionByIndex(int index) {
-		propositions.remove(index);
-	}
-
-	public void removePropositionByQuestion(Proposition proposition) {
-		propositions.remove(proposition);
+	public void setProposition(Proposition proposition) {
+		this.proposition = proposition;
 	}
 
 	public QuestionType getType() {
@@ -80,23 +77,13 @@ public class Question extends PanacheEntity {
 		this.type = type;
 	}
 
-	public Proposition createProposition(String statement) {
-		Proposition p = new Proposition(statement);
-		propositions.add(p);
-		return p;
-	}
-
-	public PropositionMCQ createProposition(String statement, boolean isRight) {
-		PropositionMCQ p = new PropositionMCQ(statement, isRight);
-		propositions.add(p);
-		return p;
-	}
 	
-	public List<Proposition> getPropositions() {
-		return this.propositions;
+	
+	public List<PropositionMCQ> getPropositionsMCQ() {
+		return this.propositionsMCQ;
 	}
 
-	public void setPropositions(List<Proposition> propositions) {
-		this.propositions = propositions;
+	public void setPropositionsMCQ(List<PropositionMCQ> propositions) {
+		this.propositionsMCQ = propositions;
 	}
 }
