@@ -67,7 +67,7 @@ public class QuestionnaireResource {
 	public Response deleteQuestionnaireById(@PathParam("id") Long id, Questionnaire questionnaire) {
 		Questionnaire q = Questionnaire.findById(id);
 		q.delete();
-		return Response.ok(q).status(200).build();
+		return Response.ok("Questionnaire deleted").status(200).build();
 	}
 
 }
