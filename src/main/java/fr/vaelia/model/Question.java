@@ -34,7 +34,7 @@ public class Question extends PanacheEntity {
 	private QuestionType type;
 	private int timer;
 
-	@OneToMany(mappedBy = "questionMCQ", cascade = CascadeType.PERSIST)
+	@OneToMany(mappedBy = "questionMCQ", cascade =  CascadeType.ALL, orphanRemoval = true)
 	private List<PropositionMCQ> propositionsMCQ = new ArrayList<PropositionMCQ>();
 
 	@OneToOne(mappedBy = "question",cascade = CascadeType.PERSIST)

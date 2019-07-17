@@ -14,11 +14,10 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
-import fr.vaelia.model.Proposition;
 import fr.vaelia.model.PropositionMCQ;
 import fr.vaelia.model.Question;
-import fr.vaelia.model.Questionnaire;
 import fr.vaelia.model.Question.QuestionType;
+import fr.vaelia.model.Questionnaire;
 
 /**
  * QuestionResource
@@ -93,22 +92,17 @@ public class QuestionResource {
     public Response ajouterQuestion(Question question) {
         if (question.getStatement() == null || question.getStatement().isEmpty()) {
             throw new WebApplicationException("Il manque le statelent");
-            //return Response.status(Status.BAD_REQUEST).entity("Il manque le Statement").build();
         }
         if (question.getType() == null) {
             throw new WebApplicationException("Il manque le Type");
-            // return Response.status(Status.BAD_REQUEST).entity("Il manque le Type").build();
         }
         if (question.getTimer() == 0) {
             throw new WebApplicationException("Il manque le Timer");
-            // return Response.status(Status.BAD_REQUEST).entity("Il manque le Timer").build();
         }
         if (question.getType() == QuestionType.MCQ) {
             if (question.getPropositionsMCQ() == null || question.getPropositionsMCQ().isEmpty()
                     || question.getPropositionsMCQ().size() < 2) {
                         throw new WebApplicationException("Le type de question MCQ n'a pas assez de propisitions");
-                // return Response.status(Status.BAD_REQUEST).entity("Le type de question MCQ n'a pas assez propositions")
-                //         .build();
             } else {
                 for (PropositionMCQ proposition : question.getPropositionsMCQ()) {
                     if (proposition.getStatement().isEmpty()) {
@@ -118,18 +112,16 @@ public class QuestionResource {
 
             }
         }
-        if (question.getType() == QuestionType.OPEN && (question.getPropositionsMCQ() != null && !question.getPropositionsMCQ().isEmpty())) {
-            throw new WebApplicationException("Le type de question OPEN a des propositions");
-            // return Response.status(Status.BAD_REQUEST).entity("Le type de question OPEN a des propositions").build();
+        if (question.getType() == QuestionType.OPEN) {
+            if (question.getPropositionsMCQ() != null && !question.getPropositionsMCQ().isEmpty()) {
+                throw new WebApplicationException("Le type de question OPEN a des propositions");
+            }
         }
         if (question.getType() == QuestionType.PROGRAMMING) {
             if (question.getPropositionsMCQ() == null || !question.getPropositionsMCQ().isEmpty()) {
                 throw new WebApplicationException("Le type de question PROGRAMMING ne peut avoir de propositions MCQ"); 
-                // return Response.status(Status.BAD_REQUEST)
-                        // .entity("Le type de question PROGRAMMING doit avoir qu'une proposition").build();
             } else if (question.getProposition() == null || question.getProposition().getStatement() == null || question.getProposition().getStatement().isEmpty() ) {
-                throw new WebApplicationException("La proposition est vide");
-                // return Response.status(Status.BAD_REQUEST).entity("Le proposition est vide").build();
+                throw new WebApplicationException("La liste des propositions contient des éléments vides", Status.BAD_REQUEST);
             }
         }
 
@@ -141,57 +133,59 @@ public class QuestionResource {
     @PUT
     @Path("/{id}")
     @Transactional
+    public Response modifierQuestion(@PathParam("id") Long id, Question questionClient) {
+        if (questionClient == null) {
+            throw new WebApplicationException("L'objet Question est vide", Status.BAD_REQUEST);
+        }
+        if (questionClient.getStatement() == null || questionClient.getStatement().isEmpty()) { // || questionClient.getTimer() == 0) {
+            throw new WebApplicationException("Le libellé de la question est manquant", Status.BAD_REQUEST);
+        }
+        if (questionClient.getTimer() == 0) {
+            throw new WebApplicationException("Le timer est invalide", Status.BAD_REQUEST);
+        }
 
-    public Response modifierQuestion(@PathParam("id") Long id, Question question) {
-        if (question == null) {
-            return Response.status(Status.BAD_REQUEST).entity("La question entrant est vide").build();
-        }
-        if (question.getStatement() == null || question.getStatement().isEmpty() || question.getTimer() == 0) {
-            return Response.status(Status.BAD_REQUEST).entity("Le champ statement ou le timer est vide").build();
-        }
-        Question question2 = Question.findById(id);
+        Question questionServeur = Question.findById(id);
 
-        if (question2 == null) {
-            return Response.status(Status.BAD_REQUEST).entity("La question dont l'id est " + id + " n'existe pas")
-                    .build();
+        if (questionServeur == null) {
+            throw new WebApplicationException("La question dont l'id est " + id + " n'existe pas", Status.BAD_REQUEST);
         }
-        if (question2.getType() != question.getType()) {
-            return Response.status(Status.BAD_REQUEST).entity("Non autorisé").build();
+        if (questionServeur.getType() != questionClient.getType()) {
+            throw new WebApplicationException("Modifier le type de la question n'est pas autorisé", Status.FORBIDDEN);
         }
-        if (question.getType() == Question.QuestionType.PROGRAMMING && (question.getPropositionsMCQ() == null
-                || question.getPropositionsMCQ().isEmpty() || question.getPropositionsMCQ().size() > 1)) {
-            return Response.status(Status.BAD_REQUEST)
-                    .entity("Le type de question PROGRAMMING doit avoir qu'une proposition").build();
+        if (questionClient.getType() == Question.QuestionType.PROGRAMMING && (questionClient.getPropositionsMCQ() == null
+                || questionClient.getPropositionsMCQ().isEmpty() || questionClient.getPropositionsMCQ().size() > 1)) {
+            throw new WebApplicationException("Le type PROGRAMMING ne doit avoir qu'une proposition", Status.BAD_REQUEST);
         }
-        if (question.getType() == QuestionType.OPEN
-                && (question.getPropositionsMCQ() != null && !question.getPropositionsMCQ().isEmpty())) {
-            return Response.status(Status.BAD_REQUEST).entity("Le type de question OPEN a des propositions").build();
+        if (questionClient.getType() == QuestionType.OPEN) {
+            if (questionClient.getPropositionsMCQ() != null && !questionClient.getPropositionsMCQ().isEmpty()) {
+                throw new WebApplicationException("Le type OPEN a des propositions MCQ", Status.BAD_REQUEST);
+            }
+            if (questionClient.getProposition() == null 
+                || questionClient.getProposition().getStatement() == null 
+                || questionClient.getProposition().getStatement().isEmpty() ) {
+                    throw new WebApplicationException("Le type OPEN requiert une proposition de correction", Status.BAD_REQUEST);
+                }
         }
-        if (question.getType() == QuestionType.MCQ) {
+        if (questionClient.getType() == QuestionType.MCQ) {
 
-            if (question.getPropositionsMCQ() == null || question.getPropositionsMCQ().isEmpty()
-                    || question.getPropositionsMCQ().size() < 2) {
-                return Response.status(Status.BAD_REQUEST).entity("Le type de question MCQ n'a pas assez propositions")
-                        .build();
+            if (questionClient.getPropositionsMCQ() == null || questionClient.getPropositionsMCQ().isEmpty()
+                    || questionClient.getPropositionsMCQ().size() < 2) {
+                throw new WebApplicationException("Le type MCQ requiert plus d'une proposition", Status.BAD_REQUEST);
             } else {
-                for (Proposition proposition : question.getPropositionsMCQ()) {
+                for (PropositionMCQ proposition : questionClient.getPropositionsMCQ()) {
                     if (proposition.getStatement().isEmpty()) {
-                        return Response.status(Status.BAD_REQUEST).entity("Des propositions vides").build();
+                        throw new WebApplicationException("La liste des propositions contient des éléments vides", Status.BAD_REQUEST);
                     }
                 }
-
             }
         }
-        question2.setStatement(question.getStatement());
-        question2.setTimer(question.getTimer());
-        if (question.getType() == QuestionType.MCQ || question.getType() == Question.QuestionType.PROGRAMMING) {
-
-            question2.getPropositionsMCQ().clear();
-            question2.getPropositionsMCQ().addAll(question.getPropositionsMCQ());
-
+        questionServeur.setStatement(questionClient.getStatement());
+        questionServeur.setTimer(questionClient.getTimer());
+        if (questionClient.getType() == QuestionType.MCQ) {
+            questionServeur.getPropositionsMCQ().clear();
+            questionServeur.getPropositionsMCQ().addAll(questionClient.getPropositionsMCQ());
         }
-        question2.persist();
-        return Response.ok().build();
+        return Response.ok(questionServeur).build();
     }
 
 }
