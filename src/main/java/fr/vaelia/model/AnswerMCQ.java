@@ -4,8 +4,6 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
-import org.jboss.resteasy.spi.touri.MappedBy;
-
 /**
  * 
  * 
