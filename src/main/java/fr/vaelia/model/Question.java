@@ -3,6 +3,7 @@ package fr.vaelia.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -42,6 +43,7 @@ public class Question extends PanacheEntity {
 
 	@ManyToOne
 	@JoinColumn(name = "questionnaire_id")
+	@JsonbTransient
 	private Questionnaire questionnaire;
 
 	public Question() {
@@ -86,4 +88,10 @@ public class Question extends PanacheEntity {
 	public void setPropositionsMCQ(List<PropositionMCQ> propositions) {
 		this.propositionsMCQ = propositions;
 	}
+
+	public void setQuestionnaire(Questionnaire questionnaire) {
+		this.questionnaire = questionnaire;
+	}
+
+	
 }
