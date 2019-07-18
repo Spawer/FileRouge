@@ -6,7 +6,10 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import fr.vaelia.model.AnswerOpen;
 import fr.vaelia.model.Candidate;
+import fr.vaelia.model.Question;
+import fr.vaelia.model.Questionnaire;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -27,6 +30,31 @@ public class CandidateResources {
 			return Response.ok(candidate).status(200).build();
 		}
 		return Response.notModified("Candidate not created").status(404).build();
+	}
+	
+	@POST // Create an answer for a given question
+	@Transactional
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/{candidateId}/questionnaires/{questionnaireId}/questions/{questionId}/answers")
+	public Response createCandidateAnswerByQuestion(
+			@PathParam("candidateId") Long candidateId,
+			@PathParam("questionnaireId") Long questionnaireId,
+			@PathParam("questionId") Long questionId,
+			AnswerOpen answer
+	) {
+		Candidate candidate = Candidate.findById(candidateId);
+		Questionnaire questionnaire = Questionnaire.findById(questionnaireId);
+		Question question = Question.findById(questionId);
+		answer.setCandidate(candidate);
+		answer.setQuestionnaire(questionnaire);
+		answer.setQuestion(question);
+		answer.persist();
+		
+		if (answer.isPersistent()) {
+			return Response.ok(answer).status(201).build();
+		}
+		return Response.notModified("Answer not created").status(404).build();
 	}
 
 	@GET

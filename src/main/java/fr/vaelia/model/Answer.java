@@ -1,5 +1,6 @@
 package fr.vaelia.model;
 
+import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.Entity;
 
 import javax.persistence.Inheritance;
@@ -28,15 +29,18 @@ public abstract class Answer extends PanacheEntity {
 
 	//The answers are related to a question
 	@ManyToOne//(optional = false)
+	@JsonbTransient
 	protected Question question;
 	
 	@ManyToOne
 	@JoinColumn(name = "candidate_id")
+	@JsonbTransient
 	protected Candidate candidate;
 	
 	// The answers are related to a question
 	@ManyToOne
 	@JoinColumn(name = "questionnaire_id")
+	@JsonbTransient
 	protected Questionnaire questionnaire;
 	
 
